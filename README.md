@@ -1,0 +1,2 @@
+# wordlele
+C++ Wordle solver
