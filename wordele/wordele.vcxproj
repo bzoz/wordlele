@@ -139,7 +139,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="word.h" />
     <ClInclude Include="guesses.h" />
     <ClInclude Include="wordlist.h" />
   </ItemGroup>
