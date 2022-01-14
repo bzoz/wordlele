@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <cstdint>
+#include <cstring>
 
 /*
  *  Store a signle guess and its result.
@@ -75,9 +76,13 @@ public:
 	 */
 	bool matches(const char* tried_solution) const {
 		for (const auto& guess : guesses) {
-			auto tried_guess = Guess::from_words(guess.word, tried_solution);
-			if (guess.result != tried_guess.result)
+			if (strncmp(tried_solution, guess.word, 5) == 0) {
 				return false;
+			}
+			auto tried_guess = Guess::from_words(guess.word, tried_solution);
+			if (guess.result != tried_guess.result) {
+				return false;
+			}
 		}
 		return true;
 	}
