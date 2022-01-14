@@ -7,7 +7,7 @@
 #include "wordlist.h"
 #include "guesses.h"
 
-
+// Finds a word that ,inimizes the average number of possible solutions
 void minimize_avgerage_possible_solutions(const std::vector<const char*>& all_words, const std::vector<const char*>& possible_solutions) {
 	std::mutex mutex;
 	unsigned cnt = 0;
@@ -36,8 +36,11 @@ void minimize_avgerage_possible_solutions(const std::vector<const char*>& all_wo
 }
 
 int main() {
+	// Load words into vector for easier manipulation
 	std::vector<const char*> all_words(words, words + sizeof(words) / sizeof(*words));
 	std::vector<const char*> possible_solutions(solutions, solutions + sizeof(solutions) / sizeof(*solutions));
+
+	// tests...
 	std::unordered_set<const char*> tried_words = {
 		"roate", "hault", "tawny"
 	};

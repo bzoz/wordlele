@@ -3,6 +3,7 @@
 #include <vector>
 
 namespace {
+    // Words that can be a solution
     const char* solutions[] = {
         "cigar","rebut","sissy","humph","awake","blush","focal","evade","naval","serve",
         "heath","dwarf","model","karma","stink","grade","quiet","bench","abate","feign",
@@ -237,6 +238,7 @@ namespace {
         "flush","catty","login","eject","roger","rival","untie","refit","aorta","adult",
         "judge","rower","artsy","rural","shave" };
 
+    // Words that can be used in the input
     const char* words[] = {
                                                 "aahed","aalii","aargh","aarti","abaca",
         "abaci","abacs","abaft","abaka","abamp","aband","abash","abask","abaya","abbas",
