@@ -7,20 +7,20 @@
 #include "wordlist.h"
 #include "guesses.h"
 
-// Finds a word that ,inimizes the average number of possible solutions
+// Finds a word that minimizes the average number of possible solutions
 void minimize_avgerage_possible_solutions(const std::vector<const char*>& all_words, const std::vector<const char*>& possible_solutions) {
 	std::mutex mutex;
 	unsigned cnt = 0;
 	unsigned min_word_cnt = 0xffffffff;
-	const char* min_word;
+	const char* min_word = "(none)";
 
 	concurrency::parallel_for_each(begin(all_words), end(all_words), [&](const char* tested_word) {
 		unsigned int this_cnt = 0;
 		for (auto tested_solution : possible_solutions) {
-			Guesses constrains;
-			constrains.add_guess(Guess::from_words(tested_word, tested_solution));
+			Guesses guess;
+			guess.add_guess(Guess::from_words(tested_word, tested_solution));
 			for (auto word : possible_solutions) {
-				if (constrains.matches(word))
+				if (guess.matches(word))
 					++this_cnt;
 			}
 		}
@@ -32,7 +32,7 @@ void minimize_avgerage_possible_solutions(const std::vector<const char*>& all_wo
 			std::cout << cnt << "/" << all_words.size() << " " << min_word << " - " << min_word_cnt << "\n";
 		}
 		mutex.unlock();
-		});
+	});
 }
 
 int main() {

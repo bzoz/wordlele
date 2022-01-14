@@ -60,6 +60,19 @@ struct Guess {
 		}
 		return r;
 	}
+
+	double score() const {
+		double score = 0;
+		for (int p = 0; p < 5; ++p) {
+			switch ((result >> (p * 2)) & 0b11) {
+			case 0b00: break;
+			case 0b01: break;
+			case 0b10: score += 0.5; break;
+			case 0b11: score += 1; break;
+			}
+		}
+		return score;
+	}
 };
 
 /*
