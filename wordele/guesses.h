@@ -73,6 +73,10 @@ struct Guess {
     }
     return score;
   }
+
+  bool found_solution() const {
+    return result == 0b1111111111;
+  }
 };
 
 /*
@@ -98,6 +102,12 @@ public:
       }
     }
     return true;
+  }
+  std::size_t count() const {
+    return guesses.size();
+  }
+  bool found_solution() const {
+    return !guesses.empty() && guesses.back().found_solution();
   }
 private:
   std::vector<Guess> guesses;
