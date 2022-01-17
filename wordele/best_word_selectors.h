@@ -5,15 +5,21 @@
 #include "guesses.h"
 
 struct MinimizeAveragePossibleSolutions {
+  const char* best_first = { "roate" };
   const char* operator()(const Guesses& guesses,
-    const std::vector<const char*>& all_words,
-    const std::vector<const char*>& possible_solutions) {
+                         const std::vector<const char*>& all_words,
+                         const std::vector<const char*>& possible_solutions,
+                         bool first_word) {
+    if (first_word) {
+      return best_first;
+    }
     std::mutex mutex;
     unsigned cnt = 0;
     unsigned min_word_cnt = 0xffffffff;
-    const char* min_word = "(none)";
+    const char* min_word = "?????";
 
-    concurrency::parallel_for_each(begin(all_words), end(all_words), [&](const char* tested_word) {
+    const std::vector<const char*>& dictionary = possible_solutions.size() < 5 ? possible_solutions : all_words;
+    concurrency::parallel_for_each(begin(dictionary), end(dictionary), [&](const char* tested_word) {
       unsigned int this_cnt = 0;
       for (auto tested_solution : possible_solutions) {
         Guesses guess;
