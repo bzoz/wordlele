@@ -11,7 +11,7 @@ Guesses solve(std::vector<const char*> all_words,
           GetNextGuess get_next_guess) {
   Guesses guesses;
   bool first = true;
-  while (!guesses.found_solution()) {
+  while (!guesses.found_solution() && guesses.count() <= 6) {
     guesses.add_guess(get_next_guess(guesses, all_words, possible_solutions, first));
     first = false;
     if (hard_mode) {
