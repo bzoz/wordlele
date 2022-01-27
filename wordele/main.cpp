@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include <vector>
 #include <string>
 #include <mutex>
@@ -31,13 +31,16 @@ void minimize_avgerage_possible_solutions(const std::vector<const char*>& all_wo
     if (this_cnt < min_word_cnt) {
       min_word_cnt = this_cnt;
       min_word = tested_word;
-      std::cout << cnt << "/" << all_words.size() << " " << min_word << " - " << min_word_cnt << "\n";
+      std::cout << cnt << "/" << all_words.size() << " " << tested_word << " - " << this_cnt << "\n";
     }
+    if (all_words.size() < 5)
+      std::cout << cnt << "/" << all_words.size() << " " << tested_word << " - " << this_cnt << "\n";
     mutex.unlock();
   });
 }
 
 int main() {
+  
   // Load words into vector for easier manipulation
   std::vector<const char*> all_words(words, words + sizeof(words) / sizeof(*words));
   std::vector<const char*> possible_solutions(solutions, solutions + sizeof(solutions) / sizeof(*solutions));
@@ -68,13 +71,24 @@ int main() {
   }*/
   
   Guesses guesses;
-  guesses.add_guess(Guess::from_result("roate", "innnn"));
-  guesses.add_guess(Guess::from_result("sculk", "ninnm"));
-  guesses.add_guess(Guess::from_result("upbow", "ninnn"));
-  //guesses.add_guess(Guess::from_result("pugil", "mnnnn"));
-  /*all_words.erase(std::remove_if(begin(all_words), end(all_words), [&](const char* word) {
+  
+  std::vector<std::pair<const char*, const char*>> tries = {
+    {"roate", "nmnin"},
+    {"joint", "nmnmm"},
+    {"count", "nmmmm"},
+  };
+  for (const auto& atry : tries) {
+    guesses.add_guess(Guess::from_result(atry.first, atry.second));
+  }
+
+  /*guesses.add_guess(Guess::from_result("roate", "nnmnn"));
+  guesses.add_guess(Guess::from_result("slack", "nnmmm"));
+  guesses.add_guess(Guess::from_result("aback", "nnmmm")); // - dodanie psuje wyniki*/
+  
+  
+  all_words.erase(std::remove_if(begin(all_words), end(all_words), [&](const char* word) {
     return !guesses.matches(word);
-    }), end(all_words));*/
+    }), end(all_words));
   possible_solutions.erase(std::remove_if(begin(possible_solutions), end(possible_solutions), [&](const char* word) {
     return !guesses.matches(word);
     }), end(possible_solutions));
