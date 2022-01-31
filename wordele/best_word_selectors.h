@@ -46,8 +46,8 @@ struct MinimizeAveragePossibleSolutions {
 struct MinimizeMaxPossibleSolutions {
   const char* best_first = { "aesir" };
   const char* operator()(const Guesses& guesses,
-    const std::vector<const char*>& all_words,
-    const std::vector<const char*>& possible_solutions,
+                         const std::vector<const char*>& all_words,
+                         const std::vector<const char*>& possible_solutions,
     bool first_word) {
     if (first_word) {
       return best_first;
@@ -61,7 +61,7 @@ struct MinimizeMaxPossibleSolutions {
     concurrency::parallel_for_each(begin(dictionary), end(dictionary), [&](const char* tested_word) {
       unsigned int this_max = 0;
       for (auto tested_solution : possible_solutions) {
-        int this_cnt = 0;
+        unsigned this_cnt = 0;
         Guesses guess;
         guess.add_guess(Guess::from_words(tested_word, tested_solution));
         for (auto word : possible_solutions) {
@@ -89,8 +89,8 @@ struct MinimizeMaxPossibleSolutions {
 struct MaximizeScore {
   const char* best_first = { "soare" };
   const char* operator()(const Guesses& guesses,
-    const std::vector<const char*>& all_words,
-    const std::vector<const char*>& possible_solutions,
+                         const std::vector<const char*>& all_words,
+                         const std::vector<const char*>& possible_solutions,
     bool first_word) {
     if (first_word) {
       return best_first;

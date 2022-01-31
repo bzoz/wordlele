@@ -6,9 +6,9 @@
 
 template <typename GetNextGuess>
 Guesses solve(std::vector<const char*> all_words,
-          std::vector<const char*> possible_solutions,
-          bool hard_mode,
-          GetNextGuess get_next_guess) {
+              std::vector<const char*> possible_solutions,
+              bool hard_mode,
+              GetNextGuess get_next_guess) {
   Guesses guesses;
   bool first = true;
   while (!guesses.found_solution() && guesses.count() <= 6) {

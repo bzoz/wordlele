@@ -238,7 +238,7 @@ namespace {
     "flush","catty","login","eject","roger","rival","untie","refit","aorta","adult",
     "judge","rower","artsy","rural","shave" };
 
-  // Words that can be used in the input
+  // Other words that can be used in the input, does not include the solution words
   const char* words[] = {
                         "aahed","aalii","aargh","aarti","abaca",
     "abaci","abacs","abaft","abaka","abamp","aband","abash","abask","abaya","abbas",
