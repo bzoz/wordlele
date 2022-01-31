@@ -8,7 +8,7 @@ template <typename GetNextGuess>
 Guesses solve(std::vector<const char*> all_words,
               std::vector<const char*> possible_solutions,
               bool hard_mode,
-              GetNextGuess get_next_guess) {
+              const GetNextGuess& get_next_guess) {
   Guesses guesses;
   bool first = true;
   while (!guesses.found_solution() && guesses.count() <= 6) {
@@ -32,7 +32,7 @@ struct BatchGuesser {
   Guess operator()(const Guesses& guesses,
                    const std::vector<const char*>& all_words,
                    const std::vector<const char*>& possible_solutions,
-                   bool first_word) {
+                   bool first_word) const {
     return Guess::from_words(best_word_selector(guesses, all_words, possible_solutions, first_word), solution);
   }
   const char* solution;
@@ -42,9 +42,9 @@ struct BatchGuesser {
 template <typename BestWordSelector>
 struct InteractiveGuesser {
   Guess operator()(const Guesses& guesses,
-    const std::vector<const char*>& all_words,
-    const std::vector<const char*>& possible_solutions,
-    bool first_word) {
+                   const std::vector<const char*>& all_words,
+                   const std::vector<const char*>& possible_solutions,
+                   bool first_word) const {
     auto guess = best_word_selector(guesses, all_words, possible_solutions, first_word);
     std::cout << "Guess: " << guess << "\nResult? ";
     std::string result;

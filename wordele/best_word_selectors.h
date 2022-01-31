@@ -9,7 +9,7 @@ struct MinimizeAveragePossibleSolutions {
   const char* operator()(const Guesses& guesses,
                          const std::vector<const char*>& all_words,
                          const std::vector<const char*>& possible_solutions,
-                         bool first_word) {
+                         bool first_word) const {
     if (first_word) {
       return best_first;
     }
@@ -48,7 +48,7 @@ struct MinimizeMaxPossibleSolutions {
   const char* operator()(const Guesses& guesses,
                          const std::vector<const char*>& all_words,
                          const std::vector<const char*>& possible_solutions,
-    bool first_word) {
+                         bool first_word) const {
     if (first_word) {
       return best_first;
     }
@@ -91,7 +91,7 @@ struct MaximizeScore {
   const char* operator()(const Guesses& guesses,
                          const std::vector<const char*>& all_words,
                          const std::vector<const char*>& possible_solutions,
-    bool first_word) {
+                         bool first_word) const {
     if (first_word) {
       return best_first;
     }
