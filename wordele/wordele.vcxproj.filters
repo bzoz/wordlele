@@ -3,6 +3,8 @@
   <ItemGroup>
     <ClInclude Include="wordlist.h" />
     <ClInclude Include="guesses.h" />
+    <ClInclude Include="best_word_selectors.h" />
+    <ClInclude Include="solver.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />

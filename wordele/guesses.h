@@ -44,11 +44,18 @@ struct Guess {
     for (int i = 0; i < 5; ++i) {
       ++counts[solution[i]];
     }
+    // Do matches first, so if we match a letter at pos 5
+    // it wont be shown as in-word if it is on pos 1 in the guess
     for (int i = 0; i < 5; ++i) {
       r.word[i] = guess[i];
       if (guess[i] == solution[i]) {
         --counts[guess[i]];
         r.set_result(i, 'm');
+      }
+    }
+    for (int i = 0; i < 5; ++i) {
+      if (guess[i] == solution[i]) {
+        // do nothing..
       }
       else if (counts[guess[i]] > 0) {
         --counts[guess[i]];
@@ -73,6 +80,27 @@ struct Guess {
     }
     return score;
   }
+
+  std::string to_string() const {
+    std::string str = "Word: \"";
+    for (int p = 0; p < 5; ++p)
+      str.push_back(word[p]);
+    str.append("\", match: \"");
+    for (int p = 0; p < 5; ++p) {
+      switch ((result >> (p * 2)) & 0b11) {
+      case 0b00: str.push_back('?');  break;
+      case 0b01: str.push_back('n'); break;
+      case 0b10: str.push_back('i'); break;
+      case 0b11: str.push_back('m'); break;
+      }
+    }
+    str.push_back('\"');
+    return str;
+  }
+
+  bool found_solution() const {
+    return result == 0b1111111111;
+  }
 };
 
 /*
@@ -93,11 +121,18 @@ public:
         return false;
       }
       auto tried_guess = Guess::from_words(guess.word, tried_solution);
+      //std::cout << "Guess:\n\t" << guess.to_string() << "Tried:\n\t" << tried_guess.to_string() << "\n";
       if (guess.result != tried_guess.result) {
         return false;
       }
     }
     return true;
+  }
+  std::size_t count() const {
+    return guesses.size();
+  }
+  bool found_solution() const {
+    return !guesses.empty() && guesses.back().found_solution();
   }
 private:
   std::vector<Guess> guesses;
