@@ -11,12 +11,12 @@
 
 template<class GetNextGuess>
 void do_histogram(const std::vector<const char*>& all_words, const std::vector<const char*>& possible_solutions) {
-  GetNextGuess guesser;
   std::vector<int> histogram;
   histogram.resize(7, 0);
   int cnt = 0;
   for (auto solution : possible_solutions) {
-    auto result = solve(all_words, possible_solutions, false, guesser(solution));
+    GetNextGuess guesser(solution);
+    auto result = solve(all_words, possible_solutions, true, guesser);
     ++cnt;
     if (cnt % 100 == 0 || result.count() > 6) {
       std::cout << cnt << "/" << possible_solutions.size() << ": " << solution << " - " << result.count() << "\n";
@@ -41,5 +41,6 @@ int main() {
   std::vector<const char*> possible_solutions(solutions, solutions + sizeof(solutions) / sizeof(*solutions));
   all_words.insert(all_words.end(), possible_solutions.begin(), possible_solutions.end());
   
+  //do_histogram<BatchGuesser<MinimizeAveragePossibleSolutions>>(all_words, possible_solutions);
   solve(all_words, possible_solutions, true, InteractiveGuesser<MinimizeAveragePossibleSolutions>{});
 }
